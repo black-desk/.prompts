@@ -1,6 +1,6 @@
 # Contributing Guide
 
-1. All documentation and commit messages
+1. All documentation, comments and commit messages
    must be written in English.
 
 2. Follow [Semantic Line Breaks](https://sembr.org/) principles in your writing:
