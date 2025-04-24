@@ -8,5 +8,6 @@ You can use this repository as follows:
 
 ```bash
 git submodule add https://github.com/black-desk/copilot-instructions .copilot-instructions
+mkdir -p .github
 ln -s ../.copilot-instructions/copilot-instructions.md .github/copilot-instructions.md
 ```
