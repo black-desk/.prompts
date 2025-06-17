@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025 Chen Linxuan <me@black-desk.cn>
+
+SPDX-License-Identifier: MIT
+-->
+
 # Contributing Guide
 
 1. All documentation, comments and commit messages

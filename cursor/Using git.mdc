@@ -4,6 +4,12 @@ globs:
 alwaysApply: false
 ---
 
+<!--
+SPDX-FileCopyrightText: 2025 Chen Linxuan <me@black-desk.cn>
+
+SPDX-License-Identifier: MIT
+-->
+
 When commiting changes, if no changes has benn added,
 please use `git add --all` to add them all first.
 Then you may check changes to commit with `git diff HEAD --unified=100`,
