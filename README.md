@@ -19,7 +19,7 @@ This repository is added as a submodule to my projects and kept up to date via d
 ## Usage
 
 ```bash
-git submodule add https://github.com/black-desk/prompts .prompts
+git submodule add https://github.com/black-desk/.prompts
 .prompts/scripts/create-symlinks.sh
 ```
 

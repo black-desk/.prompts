@@ -15,7 +15,7 @@ zh_CN | [en](./README.md)
 ## 使用
 
 ```bash
-git submodule add https://github.com/black-desk/prompts .prompts
+git submodule add https://github.com/black-desk/.prompts
 .prompts/scripts/create-symlinks.sh
 ```
 
