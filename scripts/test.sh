@@ -187,6 +187,11 @@ function run_test() {
 }
 
 function main() {
+	if command -v bashcov >/dev/null 2>&1; then
+		log "[INFO] Running with bashcov for coverage reporting"
+		exec bashcov -- "$CURRENT_SOURCE_FILE_PATH" "$@"
+	fi
+
 	while getopts ':h' option; do
 		case "$option" in
 		h)
