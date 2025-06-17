@@ -2,5 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-generate:
+.PHONY: all test
+
+all:
 	./scripts/generate.sh
+
+test:
+	./scripts/test.sh

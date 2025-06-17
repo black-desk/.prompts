@@ -14,3 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: black-desk/workflows/generic@master
+  autotools:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: black-desk/workflows/autotools@master

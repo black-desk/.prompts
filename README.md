@@ -37,6 +37,7 @@ git submodule add https://github.com/black-desk/prompts .prompts
   Prompt files generated for GitHub Copilot by `generate.sh` (`copilot-instructions.md`, `*.prompt.md`)
 - `scripts/generate.sh` — Script for converting and outputting prompts for each platform
 - `scripts/create-symlinks.sh` — Script for creating symbolic links in other projects using this repository
+- `scripts/test.sh` — Script for testing the basic functionality of this project
 
 ## License
 

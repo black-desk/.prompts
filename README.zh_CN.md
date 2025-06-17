@@ -33,6 +33,7 @@ git submodule add https://github.com/black-desk/prompts .prompts
   由`generate.sh`为GitHub Copilot生成的提示词文件（`copilot-instructions.md`、`*.prompt.md`）
 - `scripts/generate.sh` — 用于转换并输出各平台提示词的脚本
 - `scripts/create-symlinks.sh` — 用于在使用该项目的其他项目中创建符号链接的脚本
+- `scripts/test.sh` — 用于测试该项目的基础功能
 
 ## 许可证
 
