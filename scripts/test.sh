@@ -187,8 +187,9 @@ function run_test() {
 }
 
 function main() {
-	if command -v bashcov >/dev/null 2>&1; then
+	if [[ -z "$RUN_WITH_BASHCOV" ]] && command -v bashcov >/dev/null 2>&1; then
 		log "[INFO] Running with bashcov for coverage reporting"
+		export RUN_WITH_BASHCOV=1
 		exec bashcov -- "$CURRENT_SOURCE_FILE_PATH" "$@"
 	fi
 
