@@ -128,10 +128,7 @@ function run_test() {
 
 	# Add prompts repository as submodule (simulate by copying)
 	log "[INFO] Copying prompts repository to simulate submodule..."
-	cp -r "$PROJECT_ROOT_DIR" .prompts
-
-	# Remove .git directory from the copy to simulate a clean submodule
-	rm -rf .prompts/.git
+	ln -s "$PROJECT_ROOT_DIR" .prompts
 
 	# Verify that submodule was added correctly
 	if [[ ! -f ".prompts/README.md" ]]; then
