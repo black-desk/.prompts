@@ -23,5 +23,6 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 'head'
-      - run: gem install bashcov
+      - run: |
+          gem install bashcov simplecov-cobertura
       - uses: black-desk/workflows/autotools@master
