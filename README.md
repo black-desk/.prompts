@@ -9,7 +9,7 @@ SPDX-License-Identifier: MIT
 [zh_CN](./README.zh_CN.md) | en
 
 > [!WARNING]
-> This English README is translated from the Chinese version (README.zh_CN.md)
+> This English README is translated from the Chinese version
 > using AI and may contain errors.
 
 This repository is used to centrally manage AI prompts that are shared across multiple of my personal projects.
