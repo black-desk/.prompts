@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2025 Chen Linxuan <me@black-desk.cn>
+#
+# SPDX-License-Identifier: MIT
+
+version = 1
+
+[[annotations]]
+path = ["*.mdc"]
+SPDX-FileCopyrightText = "2025 Chen Linxuan <me@black-desk.cn>"
+SPDX-License-Identifier = "MIT"

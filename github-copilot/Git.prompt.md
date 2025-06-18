@@ -1,10 +1,4 @@
-<!--
-SPDX-FileCopyrightText: 2025 Chen Linxuan <me@black-desk.cn>
-
-SPDX-License-Identifier: MIT
--->
-
-When commiting changes, if no changes has benn added,
+When user ask to commiting current changes, if no changes has been added,
 please use `git add --all` to add them all first.
-Then you may check changes to commit with `git diff HEAD --unified=100`,
-as well as checking commit message style with `git log -n 100`.
+Then you may check changes to commit with `git diff HEAD --unified=100 | cat`,
+as well as checking commit message style with `git log -n 10 | cat`.
