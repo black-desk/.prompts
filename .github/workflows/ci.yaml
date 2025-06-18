@@ -2,12 +2,13 @@
 #
 # SPDX-License-Identifier: MIT
 
-name: Continuous integration for master
+name: Continuous integration
 
 on:
   push:
     branches:
       - master
+  pull_request:
 
 jobs:
   generic:
