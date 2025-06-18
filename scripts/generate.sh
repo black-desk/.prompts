@@ -52,7 +52,7 @@ function process_cursor() {
 	local rules_dir="../rules"
 	local output_dir="../cursor"
 
-	rm -r "$output_dir"
+	rm -f "$output_dir"/*.mdc
 	mkdir -p "$output_dir"
 
 	local project_instructions="$rules_dir/Project instructions.md"
@@ -96,7 +96,8 @@ function process_github_copilot() {
 	local rules_dir="../rules"
 	local output_dir="../github-copilot"
 
-	rm -r "$output_dir"
+	rm -f "$output_dir"/copilot-instructions.md
+	rm -f "$output_dir"/*.prompt.md
 	mkdir -p "$output_dir"
 
 	local project_instructions="$rules_dir/Project instructions.md"
