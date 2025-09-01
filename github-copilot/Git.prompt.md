@@ -1,4 +1,0 @@
-When user ask to commiting current changes, if no changes has been added,
-please use `git add --all` to add them all first.
-Then you may check changes to commit with `git diff HEAD --unified=100 | cat`,
-as well as checking commit message style with `git log -n 10 | cat`.
