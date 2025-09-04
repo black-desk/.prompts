@@ -18,25 +18,35 @@ This repository is added as a submodule to my projects and kept up to date via d
 
 ## Usage
 
+For external projects:
+
 ```bash
 git submodule add https://github.com/black-desk/.prompts
-.prompts/scripts/create-symlinks.sh
+.prompts/scripts/generate.sh  # Generate prompt files
+.prompts/scripts/create-symlinks.sh  # Create symbolic links
+```
+
+For development in this repository:
+
+```bash
+scripts/generate.sh  # Generate prompt files
+scripts/create-symlinks.sh  # Create symbolic links for testing
 ```
 
 ## Directory Structure
 
 - `rules/` —
   Source prompt Markdown files (maintained manually)
-  - `rules/Project instructions.md` -
+  - `rules/instructions.md` -
     This file generates `copilot-instructions.md` and `mdc` files with rule type `Always`.
   - `rules/*.md` -
     Generates `*.prompt.md` and `mdc` files with rule type `Agent Requested`, where the `description` field is the document title.
 - `cursor/` —
   Prompt files generated for Cursor by `generate.sh` (`*.mdc`)
 - `github-copilot/` —
-  Prompt files generated for GitHub Copilot by `generate.sh` (`copilot-instructions.md`, `*.prompt.md`)
-- `scripts/generate.sh` — Script for converting and outputting prompts for each platform
-- `scripts/create-symlinks.sh` — Script for creating symbolic links in other projects using this repository
+  Prompt files generated for GitHub Copilot and VS Code by `generate.sh` (`copilot-instructions.md`, `*.prompt.md` with YAML frontmatter)
+- `scripts/generate.sh` — Script for converting source prompts to platform-specific formats
+- `scripts/create-symlinks.sh` — Script for creating symbolic links (works in both .prompts repo and external projects)
 - `scripts/test.sh` — Script for testing the basic functionality of this project
 
 ## License

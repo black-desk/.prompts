@@ -145,7 +145,7 @@ function run_test() {
 	.prompts/scripts/create-symlinks.sh
 
 	# Verify that expected directories were created
-	local expected_dirs=(".github" ".cursor/rules")
+	local expected_dirs=(".github" ".cursor/rules" ".github/prompts")
 	for dir in "${expected_dirs[@]}"; do
 		if [[ ! -d "$dir" ]]; then
 			log "[ERROR] Expected directory %s was not created" "$dir"

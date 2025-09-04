@@ -55,13 +55,13 @@ function process_cursor() {
 	rm -f "$output_dir"/*.mdc
 	mkdir -p "$output_dir"
 
-	local project_instructions="$rules_dir/Project instructions.md"
+	local project_instructions="$rules_dir/instructions.md"
 	if [[ -f "$project_instructions" ]]; then
 		local title
 		title=$(basename "$project_instructions" .md)
 		local content
 		content=$(cat "$project_instructions")
-		cat > "$output_dir/Project instructions.mdc" << EOF
+		cat > "$output_dir/instructions.mdc" << EOF
 ---
 description: $title
 globs:
@@ -73,7 +73,7 @@ EOF
 	fi
 
 	for file in "$rules_dir"/*.md; do
-		if [[ "$(basename "$file")" != "Project instructions.md" ]]; then
+		if [[ "$(basename "$file")" != "instructions.md" ]]; then
 			local basename
 			basename=$(basename "$file" .md)
 			local title="$basename"
@@ -100,41 +100,29 @@ function process_github_copilot() {
 	rm -f "$output_dir"/*.prompt.md
 	mkdir -p "$output_dir"
 
-	local project_instructions="$rules_dir/Project instructions.md"
+	local project_instructions="$rules_dir/instructions.md"
 	if [[ -f "$project_instructions" ]]; then
 		cat "$project_instructions" > "$output_dir/copilot-instructions.md"
 	fi
 
 	for file in "$rules_dir"/*.md; do
-		if [[ "$(basename "$file")" != "Project instructions.md" ]]; then
+		if [[ "$(basename "$file")" != "instructions.md" ]]; then
 			local basename
 			basename=$(basename "$file" .md)
-			cp "$file" "$output_dir/$basename.prompt.md"
+			local title="$basename"
+			local content
+			content=$(cat "$file")
+			# Generate unified prompt file format with YAML frontmatter
+			cat > "$output_dir/$basename.prompt.md" << EOF
+---
+description: $title
+mode: agent
+---
+
+$content
+EOF
 		fi
 	done
-}
-
-function update_github_symlinks() {
-    local github_dir="../.github"
-    local rules_dir="../github-copilot"
-    mkdir -p "$github_dir"
-    pushd "$github_dir" > /dev/null
-    rm -rf ./*.md
-    for file in ../github-copilot/*.md; do
-        ln -s "$file" .
-    done
-    popd > /dev/null
-}
-
-function update_cursor_rules_symlinks() {
-    local cursor_rules_dir="../.cursor/rules"
-    mkdir -p "$cursor_rules_dir"
-    pushd "$cursor_rules_dir" > /dev/null
-    rm -rf ./*.mdc
-    for file in ../../cursor/*.mdc; do
-        ln -s "$file" .
-    done
-    popd > /dev/null
 }
 
 function main() {
@@ -162,12 +150,6 @@ function main() {
 
 	log "[INFO] Generating files for github-copilot..."
 	process_github_copilot
-
-	log "[INFO] Updating .github/ symlinks..."
-	update_github_symlinks
-
-	log "[INFO] Updating .cursor/rules/ symlinks..."
-	update_cursor_rules_symlinks
 }
 
 main "$@"
