@@ -23,10 +23,11 @@ CURRENT_SOURCE_FILE_NAME="$(basename -- "$CURRENT_SOURCE_FILE_PATH")"
 # shellcheck disable=SC2016
 USAGE="$CURRENT_SOURCE_FILE_NAME"'
 
-Create symbolic links in the current project for AI prompt files.
+Create symbolic links for AI prompt files.
 
-This script should be run from the root directory of a project that includes
-this repository as a submodule at .prompts/.
+This script can be run from:
+1. The root directory of the .prompts repository itself (for development)
+2. The root directory of a project that includes this repository as a submodule at .prompts/
 
 '"
 Usage:
@@ -50,7 +51,16 @@ function log() {
 # Function to create GitHub Copilot symlinks
 function create_github_symlinks() {
 	local github_dir=".github"
-	local prompts_github_dir=".prompts/github-copilot"
+	local prompts_github_dir
+
+	# Determine the source directory based on whether we're in .prompts repo or external repo
+	if [[ -d "github-copilot" ]]; then
+		# We're in the .prompts repository itself
+		prompts_github_dir="github-copilot"
+	else
+		# We're in an external repository with .prompts as submodule
+		prompts_github_dir=".prompts/github-copilot"
+	fi
 
 	if [[ ! -d "$prompts_github_dir" ]]; then
 		log "[ERROR] Directory %s does not exist. Make sure the prompts submodule is properly initialized." "$prompts_github_dir"
@@ -69,13 +79,48 @@ function create_github_symlinks() {
 		fi
 	done
 
-	# Create symlinks to all markdown files in the prompts directory
-	for file in ../"$prompts_github_dir"/*.md; do
+	# Only create symlink for copilot-instructions.md, not .prompt.md files
+	local instructions_file
+	if [[ -d "../github-copilot" ]]; then
+		instructions_file="../$prompts_github_dir/copilot-instructions.md"
+	else
+		instructions_file="../$prompts_github_dir/copilot-instructions.md"
+	fi
+
+	if [[ -f "$instructions_file" ]]; then
+		ln -s "$instructions_file" "copilot-instructions.md"
+		log "[INFO] Created symlink: %s -> %s" "$github_dir/copilot-instructions.md" "$instructions_file"
+	fi
+
+	popd > /dev/null
+
+	# Create VS Code prompts directory
+	local vscode_prompts_dir=".github/prompts"
+	mkdir -p "$vscode_prompts_dir"
+
+	pushd "$vscode_prompts_dir" > /dev/null
+
+	# Remove existing VS Code prompt files
+	for file in *.prompt.md; do
+		if [[ -f "$file" && -L "$file" ]]; then
+			rm "$file"
+		fi
+	done
+
+	# Create symlinks to prompt.md files only in the prompts directory
+	local prompt_files_pattern
+	if [[ -d "../../github-copilot" ]]; then
+		prompt_files_pattern="../../$prompts_github_dir/*.prompt.md"
+	else
+		prompt_files_pattern="../../$prompts_github_dir/*.prompt.md"
+	fi
+
+	for file in $prompt_files_pattern; do
 		if [[ -f "$file" ]]; then
 			local basename
 			basename=$(basename "$file")
 			ln -s "$file" "$basename"
-			log "[INFO] Created symlink: %s -> %s" "$github_dir/$basename" "$file"
+			log "[INFO] Created symlink: %s -> %s" "$vscode_prompts_dir/$basename" "$file"
 		fi
 	done
 
@@ -85,7 +130,16 @@ function create_github_symlinks() {
 # Function to create Cursor symlinks
 function create_cursor_symlinks() {
 	local cursor_rules_dir=".cursor/rules"
-	local prompts_cursor_dir=".prompts/cursor"
+	local prompts_cursor_dir
+
+	# Determine the source directory based on whether we're in .prompts repo or external repo
+	if [[ -d "cursor" ]]; then
+		# We're in the .prompts repository itself
+		prompts_cursor_dir="cursor"
+	else
+		# We're in an external repository with .prompts as submodule
+		prompts_cursor_dir=".prompts/cursor"
+	fi
 
 	if [[ ! -d "$prompts_cursor_dir" ]]; then
 		log "[ERROR] Directory %s does not exist. Make sure the prompts submodule is properly initialized." "$prompts_cursor_dir"
@@ -105,7 +159,14 @@ function create_cursor_symlinks() {
 	done
 
 	# Create symlinks to all mdc files in the prompts directory
-	for file in ../../"$prompts_cursor_dir"/*.mdc; do
+	local mdc_files_pattern
+	if [[ -d "../../cursor" ]]; then
+		mdc_files_pattern="../../$prompts_cursor_dir/*.mdc"
+	else
+		mdc_files_pattern="../../$prompts_cursor_dir/*.mdc"
+	fi
+
+	for file in $mdc_files_pattern; do
 		if [[ -f "$file" ]]; then
 			local basename
 			basename=$(basename "$file")
@@ -137,14 +198,18 @@ function main() {
 		exit 1
 	fi
 
-	# Check if we're in the right directory (should have .prompts/ subdirectory)
-	if [[ ! -d ".prompts" ]]; then
-		log "[ERROR] Directory .prompts/ not found. This script should be run from the root of a project that includes the prompts repository as a submodule."
+	# Check if we're in the right directory
+	# Either we're in .prompts repo itself (has rules/ directory)
+	# Or we're in external repo with .prompts/ submodule
+	if [[ ! -d "rules" && ! -d ".prompts" ]]; then
+		log "[ERROR] Neither rules/ nor .prompts/ directory found. This script should be run from either:"
+		log "[ERROR] 1. The root of the .prompts repository itself, or"
+		log "[ERROR] 2. The root of a project that includes the prompts repository as a submodule."
 		exit 1
 	fi
 
-	# Check if the prompts submodule is initialized
-	if [[ ! -f ".prompts/README.md" ]]; then
+	# If we're in external repo, check if the prompts submodule is initialized
+	if [[ -d ".prompts" && ! -f ".prompts/README.md" ]]; then
 		log "[ERROR] The .prompts/ submodule appears to be uninitialized. Please run 'git submodule update --init' first."
 		exit 1
 	fi

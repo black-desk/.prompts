@@ -14,25 +14,35 @@ zh_CN | [en](./README.md)
 
 ## 使用
 
+对于外部项目：
+
 ```bash
 git submodule add https://github.com/black-desk/.prompts
-.prompts/scripts/create-symlinks.sh
+.prompts/scripts/generate.sh  # 生成提示词文件
+.prompts/scripts/create-symlinks.sh  # 创建符号链接
+```
+
+对于本仓库开发：
+
+```bash
+scripts/generate.sh  # 生成提示词文件
+scripts/create-symlinks.sh  # 创建符号链接用于测试
 ```
 
 ## 目录结构
 
 - `rules/` —
   源提示词 Markdown 文件（需手动维护）
-  - `rules/Project instructions.md` -
+  - `rules/instructions.md` -
     这个文件生成`copilot-instructions.md`以及规则类型为`Always`的`mdc`文件。
   - `rules/*.md` -
     生成`*.prompt.md`以及规则类型为`Agent Requested`的`mdc`文件，其`description`字段的值是文档的标题。
 - `cursor/` —
   由`generate.sh`为Cursor生成的提示词文件（`*.mdc`）
 - `github-copilot/` —
-  由`generate.sh`为GitHub Copilot生成的提示词文件（`copilot-instructions.md`、`*.prompt.md`）
-- `scripts/generate.sh` — 用于转换并输出各平台提示词的脚本
-- `scripts/create-symlinks.sh` — 用于在使用该项目的其他项目中创建符号链接的脚本
+  由`generate.sh`为GitHub Copilot和VS Code生成的提示词文件（`copilot-instructions.md`、带YAML前置元数据的`*.prompt.md`）
+- `scripts/generate.sh` — 用于将源提示词转换为各平台特定格式的脚本
+- `scripts/create-symlinks.sh` — 用于创建符号链接的脚本（支持在.prompts仓库和外部项目中使用）
 - `scripts/test.sh` — 用于测试该项目的基础功能
 
 ## 许可证
