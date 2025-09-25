@@ -6,6 +6,7 @@
 
 all:
 	./scripts/generate.sh
+	./scripts/create-symlinks.sh
 
 test:
 	./scripts/test.sh
