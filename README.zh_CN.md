@@ -8,6 +8,9 @@ SPDX-License-Identifier: MIT
 
 zh_CN | [en](./README.md)
 
+> [!WARNING]
+> 本仓库已不再维护。内容已迁移至 [black-desk/bdev](https://github.com/black-desk/bdev)。
+
 本仓库用于集中管理我的个人项目中同时在多个项目使用到的AI提示词。
 
 这个仓库会被作为子模块添加到我的项目中，并通过dependabot保持更新。
