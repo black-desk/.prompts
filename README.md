@@ -9,6 +9,9 @@ SPDX-License-Identifier: MIT
 [zh_CN](./README.zh_CN.md) | en
 
 > [!WARNING]
+> This repository is no longer maintained. Content has been migrated to [black-desk/bdev](https://github.com/black-desk/bdev).
+
+> [!WARNING]
 > This English README is translated from the Chinese version
 > using AI and may contain errors.
 
